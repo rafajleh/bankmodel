@@ -1,0 +1,27 @@
+body {
+    background: white !important;
+}
+.main_div{
+    width: 83%;
+    margin: 0 auto;
+    background: rgba(217, 211, 211, 0.869);
+    padding: 20px;
+}
+
+.header{
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: rgba(12, 187, 181, 0.897);
+    margin-bottom: 40px;
+}
+
+.nextbtn{
+    width: 200px;
+    padding: 10px;
+    cursor: pointer;
+    background: #31676c !important;
+}
+.rabbi.col {
+    display: flex;
+}
