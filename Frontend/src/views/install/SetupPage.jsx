@@ -222,12 +222,12 @@ const Four = (props) => {
   };
 
   const validate2 = () => {
-    // if (!info4.age) setError("Super admin name");
-    // else {
-      setError("");
-      props.nextStep();
-      props.userCallback(info4);
-    // }
+    if (!info4.email) setError("Super admin email");
+    if (!info4.password) setError("Super admin password");
+
+    setError("");
+    props.nextStep();
+    props.userCallback(info4);
   };
 
   return (
@@ -245,7 +245,7 @@ const Four = (props) => {
         <Label>Super admin name: </Label>
         <Input
           type="text"
-          name="age"
+          name="super_admin_name"
           placeholder="Super admin name"
           onChange={onInputChanged}
           style={{width: "100%", height: "33px", padding: "2px", marginTop: "6px"}}
@@ -255,7 +255,7 @@ const Four = (props) => {
         <Label>Super admin email: </Label>
         <Input
           type="text"
-          name="host"
+          name="email"
           placeholder="Super admin email"
           onChange={onInputChanged}
           style={{width: "100%", height: "33px", padding: "2px", marginTop: "6px"}}
@@ -265,7 +265,7 @@ const Four = (props) => {
         <Label>Super admin password: </Label>
         <Input
           type="text"
-          name="u_name"
+          name="password"
           placeholder="Super admin password"
           onChange={onInputChanged}
           style={{width: "100%", height: "33px", padding: "2px", marginTop: "6px"}}
@@ -298,7 +298,7 @@ const Five = (props) => {
 };
 
 const SetupPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [stepWizard, setStepWizard] = useState(null);
   const [user, setUser] = useState({});
   const [activeStep, setActiveStep] = useState(0);
@@ -352,7 +352,7 @@ const SetupPage = () => {
         <One userCallback={assignUser} />
         <Two user={user} />
         <Three user={user} />
-        <Four user={user} />
+        <Four user={user} userCallback={assignUser} />
         <Five user={user} completeCallback={handleComplete} />
       </StepWizard>
     </div>
