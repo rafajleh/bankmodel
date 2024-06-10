@@ -42,7 +42,6 @@ function App() {
   const user = UseDetectUser();
   //Detect admin
   const admin = UseDetectAdmin();
-
   const { info, isLoading } = useSelector((state) => state.userData);
 
   //User And Admin Paths
