@@ -12,6 +12,7 @@ const adminLogin = async (adminData) => {
       "content-type": "application/json",
     },
   });
+  localStorage.setItem("orgname", res.data.name);
   const data = res.data;
 
   return data;
@@ -19,6 +20,7 @@ const adminLogin = async (adminData) => {
 
 //Logout
 const adminLogout = () => {
+  localStorage.setItem("orgname", "");
   return;
 };
 

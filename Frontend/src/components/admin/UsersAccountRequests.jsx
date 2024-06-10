@@ -102,7 +102,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
           scope="col"
           className="py-3 px-3 text-center border-x-2"
         >
-          {title}
+          {title !== 'Approve Request' ? title : info.org_id !== '78900001' ? 'Approve Payment' : 'Payment Received'}
         </th>
       ))}
     </tr>
@@ -195,6 +195,97 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
       </tr>
     );
   };
+  
+  const tableRowForAccount = (request, index) => {
+    return (
+      <tr
+        key={request._id}
+        className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} border-b `}
+      >
+        {/*User Id*/}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {request.client_id}
+        </th>
+
+        {/*User Name*/}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {usersList.find(
+            (user) => Number(user?._id) === Number(request?.client_id)
+          )
+            ? usersList.find(
+                (user) => Number(user?._id) === Number(request?.client_id)
+              )?.user_name
+            : "-"}
+        </th>
+
+        {/*request Id*/}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {request.payment_id}
+        </th>
+
+        {/*request Initial Balance*/}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {/* {new Intl.NumberFormat("ar-EG", {
+            style: "currency",
+            currency: "EGP",
+          }).format(request.initial_balance)} */}
+          {request.balance}
+        </th>
+
+        {/* Decline request */}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          <form onSubmit={(event) => handleDecline(event, request._id)}>
+            <FormButton
+              text={{ default: "Decline" }}
+              bgColor={["bg-red-600", "bg-red-700", "bg-red-800"]}
+              icon={<TiDelete className="-mb-1" size={27} />}
+            />
+          </form>
+        </th>
+
+        {/* approve request */}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {(request.payment_id.split("-").length>3 && info.org_id >= 45600001) || 
+           (request.payment_id.split("-").length>4 && info.org_id >= 12300001) ? '' : 
+            <form
+              className="flex flex-col justify-center items-center"
+              onSubmit={(event) =>
+                handleApproving(
+                  event,
+                  request.client_id,
+                  request._id,
+                  request.initial_balance
+                )
+              }
+            >
+              <FormButton
+                text={{ default: "Approve" }}
+                icon={<AiFillCheckCircle className="ml-1" size={25} />}
+              />
+            </form>
+          }
+        </th>
+      </tr>
+    );
+  };
 
   //clean up for account requests status (on mount , unmount)
   UseResetStatus(() => {
@@ -210,7 +301,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
   return (
     <div className="max-w-5xl w-full">
       <h3 className="text-2xl my-10 p-3 text-center font-bold bg-blue-200 text-gray-900 border-b-4 border-blue-800 rounded shadow">
-        Users Account Requests List (
+        Users Account List (
         {filteredRequests && filteredRequests.length})
       </h3>
 
@@ -244,7 +335,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
       {/*Display Table All Data Needed*/}
       {!isLoading && filteredRequests.length > 0 && (
         <PaginationTable
-          tableRow={tableRow}
+          tableRow={info.org_id >= '78900001' ? tableRow : tableRowForAccount}
           tableHeader={tableHeader}
           tableBodyData={filteredRequests}
           rowsPerPage={20}

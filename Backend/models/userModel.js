@@ -5,6 +5,10 @@ const { autoIncrement } = require("mongoose-plugin-autoinc");
 //Define User Schema
 const userSchema = new mongoose.Schema(
   {
+    user_id: {
+      type: String,
+      default: "XXXX XXXX"
+    },
     user_name: {
       type: String,
       required: [true, "Please Type A User Name!"],
@@ -44,28 +48,22 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please Type AN EGY Phone Number!"],
       unique: true,
-      // validate: {
-      //   validator: function (v) {
-      //     let regex = new RegExp("^(1)[0-2,5]{1}[0-9]{8}");
-      //     return regex.test(v) && v.toString().length === 10;
-      //   },
-      //   message: "Please Enter A Valid EGY Phone Number!",
-      // },
+    },
+    verified_phone: {
+      type: Number,
+      default: 0
     },
     full_addresse: {
       type: String,
       required: [true, "Please Type An Addresse!"],
     },
-    zip_code: {
+    nid_no: {
       type: Number,
-      required: [true, "Please Type A Zip/Postal Code!"],
-      // validate: {
-      //   validator: function (v) {
-      //     let regex = new RegExp("^[0-9]{5}$");
-      //     return regex.test(v);
-      //   },
-      //   message: "Please Enter A Valid Zip/Postal Code",
-      // },
+      required: [true, "Please Type NID Number!"],
+    },
+    verified_nid_no: {
+      type: Number,
+      default: 0
     },
     role: {
       type: String,
@@ -83,6 +81,9 @@ const userSchema = new mongoose.Schema(
         3,
         "Sorry, You Can Not Add More Than 3 Accounts in your Bank Profile",
       ],
+    },
+    reqBank: {
+      type: String
     },
     accounts: [String],
     notifications: [notificationSchema],
@@ -116,7 +117,7 @@ userSchema.post("updateOne", function (error, doc, next) {
 //Auto Increament Users ID Plugin
 userSchema.plugin(autoIncrement, {
   model: "User",
-  startAt: 2525500300,
+  startAt: 25255001,
   incrementBy: 1,
 });
 

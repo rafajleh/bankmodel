@@ -1,4 +1,5 @@
 const AccountRequest = require("../models/accountRequestModel");
+const Account = require("../models/accountModel");
 
 //@desc   >>>> Create Account Request
 //@route  >>>> POST /api/request/create
@@ -26,7 +27,10 @@ const createAccountRequest = async (req, res, next) => {
 //@Access >>>> private(admins)
 const getAccountRequests = async (req, res) => {
   try {
-    const accountRequests = await AccountRequest.find();
+    if(req.admin.org_id < 78900001)
+      var accountRequests = await Account.find();
+    else
+      var accountRequests = await AccountRequest.find();
     res.status(200).json(accountRequests);
   } catch (error) {
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");

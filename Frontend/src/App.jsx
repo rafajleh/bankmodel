@@ -35,6 +35,7 @@ import { Contact } from "./components/forms/userForms/Contact";
 import { UnactiveSuspendedUser } from "./components/shared/UnactiveSuspendedUser";
 import { Account } from "./components/account/Account";
 import SetupPage from "./views/install/SetupPage";
+import { AccountOpen } from "./views/guest/AccountOpen";
 
 function App() {
   //Detect user
@@ -81,11 +82,12 @@ function App() {
       {/* Guest Routes */}
       {!user && !admin && (
         <Routes>
-          <Route exact path="/" element={<UserLoginPage />} />
+          <Route exact path="/" element={<Index />} />
           <Route exact path="/setup" element={<SetupPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
           <Route exact path="/admins/login" element={<AdminLoginPage />} />
           <Route exact path="/login" element={<UserLoginPage />} />
+          <Route exact path="/account-open" element={<AccountOpen />} />
           {paths.map((stringPath) => (
             <Route key={"Home"} exact path={stringPath} element={<Navigate to={"/"} />} />
           ))}

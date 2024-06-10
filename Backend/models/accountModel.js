@@ -68,6 +68,9 @@ const depositLogSchema = new mongoose.Schema(
 //Define Account Schema
 const accountSchema = new mongoose.Schema(
   {
+    payment_id: {
+      type: String,
+    },
     client_id: {
       type: String,
       required: [true, "Please Provide Client Id!"],

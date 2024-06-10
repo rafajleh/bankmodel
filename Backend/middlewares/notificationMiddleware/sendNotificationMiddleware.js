@@ -36,7 +36,7 @@ const sendNotification = async (req, res) => {
         accountsCount: updatedUser.no_of_account,
         createdAt: updatedUser.createdAt,
         userStatus: updatedUser.user_status,
-        postal: updatedUser.zip_code,
+        nid: updatedUser.nid_no,
         phone: updatedUser.phone,
         accounts: updatedUser.accounts,
         notifications: updatedUser.notifications,

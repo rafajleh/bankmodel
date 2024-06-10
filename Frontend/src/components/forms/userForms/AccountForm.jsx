@@ -6,19 +6,22 @@ import { TiUserAdd } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../../state/features/User/Auth/authSlice";
+import authService from "../../../state/features/User/Auth/authServices";
 import FormButton from "../../shared/FormButton";
 import { Logo } from "../../shared/Logo";
 import MessagesContainer from "../../shared/MessagesContainer";
 import { InputsValidator } from "../helpers/InputsValidator";
 
-export default function Register() {
+export default function AccountForm() {
+  const [cusmsg, setCusmsg] = useState("");
   const [formInputs, setFormInputs] = useState({
     firstName: "",
     lastName: "",
-    password: "",
-    repeatPassword: "",
+    password: "123456",
+    repeatPassword: "123456",
     email: "",
     phone: "",
+    reqBank: "DBBL Agent Vatara",
     address: "",
     nidNo: "",
     msg: "",
@@ -29,6 +32,7 @@ export default function Register() {
     email,
     password,
     phone,
+    reqBank,
     address,
     lastName,
     firstName,
@@ -72,14 +76,23 @@ export default function Register() {
 
     const userData = {
       name: `${firstName.trim()} ${lastName.trim()}`,
-      email: email.trim(),
+      email: `${firstName.trim().toLowerCase()}@gmail.com`,
       phone: phone.trim(),
+      reqBank: reqBank.trim(),
       nid: nidNo.trim(),
       addresse: address.trim(),
       password,
     };
 
-    dispatch(register(userData));
+    try{
+      await authService.register(userData);
+      setCusmsg("Your application received. We will verify and update you soon...");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }catch(e){
+      console.log(e)
+    }
   };
 
   return (
@@ -87,7 +100,7 @@ export default function Register() {
       <Logo />
       <h3 className="flex justify-center items-center text-2xl text-blue-800 font-bold text-center p-2 my-4 rounded shadow bg-blue-200 border-x-4 border-blue-800 select-none">
         <FcCurrencyExchange className="mr-1" size={45} />
-        <span>Customer Register</span>
+        <span>Account Opening Form</span>
       </h3>
 
       <form className="mt-10" onSubmit={handleSubmit}>
@@ -134,7 +147,7 @@ export default function Register() {
         {/* name validator */}
         <InputsValidator nameInput={`${firstName} ${lastName}`} />
 
-        <div className="relative z-0 w-full mb-6">
+        {/* <div className="relative z-0 w-full mb-6">
           <label
             htmlFor="email"
             className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
@@ -153,7 +166,7 @@ export default function Register() {
             placeholder="Type Your Email Address"
             required
           />
-        </div>
+        </div> */}
 
         <div className="relative z-0 w-full mb-6">
           <label
@@ -175,7 +188,7 @@ export default function Register() {
             required
           />
         </div>
-        <div className="relative z-0 w-full mb-6">
+        {/* <div className="relative z-0 w-full mb-6">
           <label
             htmlFor="password"
             className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
@@ -214,11 +227,30 @@ export default function Register() {
             placeholder="Repeat Password"
             required
           />
-        </div>
+        </div> */}
 
         {/* password validator */}
-        <InputsValidator passwordInput={password} />
+        {/* <InputsValidator passwordInput={password} /> */}
 
+        <div className="relative z-0 w-full mb-6">
+          <label
+            htmlFor="bankselect"
+            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
+          >
+            Select Bank
+          </label>
+
+          <input
+            name="bankselect"
+            defaultValue={reqBank}
+            onChange={(e) =>
+              setFormInputs({ ...formInputs, reqBank: e.target.value })
+            }
+            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            required
+          />
+        </div>
+        
         <div className="relative z-0 w-full mb-6">
           <label
             htmlFor="phone"
@@ -260,6 +292,38 @@ export default function Register() {
             required
           />
         </div>
+        
+        <div className="relative z-0 w-full mb-6">
+          <label
+            htmlFor="uploadnid"
+            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
+          >
+            Upload NID
+          </label>
+
+          <input
+            type="file"
+            name="uploadnid"
+            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            placeholder="Upload Your NID"
+          />
+        </div>
+        
+        <div className="relative z-0 w-full mb-6">
+          <label
+            htmlFor="uploadimg"
+            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
+          >
+            Upload Photo
+          </label>
+
+          <input
+            name="uploadimg"
+            type="file"
+            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            placeholder="Upload Your Photo"
+          />
+        </div>
 
         {/*Request Status and Errors*/}
         {(isError || isSuccess) && (
@@ -270,11 +334,17 @@ export default function Register() {
           />
         )}
 
+        {cusmsg && 
+          <MessagesContainer
+              msg={cusmsg}
+              isSuccess={true}
+              isError={false}
+          />
+        }
         {/*form button */}
         <FormButton
-          text={{ loading: "Processing", default: "Register" }}
+          text={{ loading: "Processing", default: "Submit" }}
           isLoading={isLoading}
-          icon={<TiUserAdd className="mb-[-2px] ml-1" size={27} />}
         />
       </form>
     </div>

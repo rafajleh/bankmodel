@@ -7,6 +7,7 @@ const API_URL =
 
 //Login User
 const login = async (userData) => {
+  console.log(userData);
   const res = await axios.post(API_URL + "login", userData, {
     headers: {
       "content-type": "application/json",
@@ -26,7 +27,7 @@ const register = async (userData) => {
   });
 
   const data = res.data;
-console.log(29, data)
+  console.log(29, data)
   return data;
 };
 

@@ -11,17 +11,17 @@ export const DashboardNavbar = ({ activeTab, setActiveTab }) => {
   const navTabs = [
     {
       stateName: "usersList",
-      tabName: "Users Control Panel",
-      icon: FcConferenceCall,
+      tabName: "Account Opening Request",
+      icon: FcNews,
     },
     {
       stateName: "adminsList",
-      tabName: "Admins Control Panel",
+      tabName: "All Bank Lists",
       icon: FcVoicePresentation,
     },
     {
       stateName: "usersRequests",
-      tabName: "Users Accounts Request",
+      tabName: "Users Accounts",
       icon: FcNews,
     },
     {

@@ -7,7 +7,7 @@ const { generateAdminsToken } = require("../helpers/generateAdminsToken");
 //@Access >>>> private(Owner Only)
 const getAdmins = async (req, res) => {
   try {
-    const admins = await Admin.find().select("_id email role admin_name");
+    const admins = await Admin.find().select("_id email org_id role admin_name");
     res.status(200).json(admins);
   } catch (error) {
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");
@@ -24,6 +24,7 @@ const getOneAdmin = async (req, res) => {
     res.status(200).json({
       id: admin.id,
       name: admin.admin_name,
+      org_id: admin.org_id,
       email: admin.email,
       role: admin.role,
     });
@@ -51,6 +52,7 @@ const adminLogin = async (req, res) => {
       return res.status(200).json({
         id: admin.id,
         name: admin.admin_name,
+        org_id: admin.org_id,
         email: admin.email,
         role: admin.role,
         token: generateAdminsToken(admin.id, admin.email, admin.role),

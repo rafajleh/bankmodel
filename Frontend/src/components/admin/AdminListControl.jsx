@@ -15,8 +15,10 @@ import { UpdateAdminRole } from "./UpdateAdminRole";
 import { PaginationTable } from "../helpers/PaginationTable";
 
 const tableHeaderTitles = [
-  "Admin Name",
-  "Admin Role",
+  "Bank ID",
+  "Bank Name",
+  "Admin Email",
+  "Role",
   "Remove Admin",
   "Update Role",
 ];
@@ -114,12 +116,28 @@ const AdminListControl = ({ adminsList }) => {
         key={admin._id}
         className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} border-b `}
       >
+        {/*Admin ID*/}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {admin.org_id}
+        </th>
+        
         {/*Admin Name*/}
         <th
           scope="row"
           className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
         >
           {admin.admin_name}
+        </th>
+        
+        {/*Admin Email*/}
+        <th
+          scope="row"
+          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
+        >
+          {admin.email}
         </th>
 
         {/*Admin Role*/}
@@ -181,7 +199,7 @@ const AdminListControl = ({ adminsList }) => {
   return (
     <div className="max-w-5xl w-full">
       <h3 className="text-2xl my-10 p-3 text-center font-bold bg-blue-200 text-gray-900 border-b-4 border-blue-800 rounded shadow">
-        Admins List ({filteredAdmins && filteredAdmins.length})
+        Bank List ({filteredAdmins && filteredAdmins.length})
       </h3>
 
       {/*search admins with name*/}

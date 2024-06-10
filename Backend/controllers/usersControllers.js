@@ -1,3 +1,5 @@
+const AccountRequest = require("../models/accountRequestModel");
+
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const { generateUsersToken } = require("../helpers/generateUsersToken");
@@ -8,7 +10,7 @@ const { generateUsersToken } = require("../helpers/generateUsersToken");
 const getUsers = async (req, res) => {
   try {
     const users = await User.find().select(
-      "_id user_name email user_status no_of_account"
+      "_id user_id user_name email phone nid_no verified_nid_no verified_phone user_status no_of_account"
     );
     res.status(200).json(users);
   } catch (error) {
@@ -28,12 +30,16 @@ const getOneUser = async (req, res) => {
       email: user.email,
       address: user.full_addresse,
       id: user.id,
+      user_id: user.user_id,
       accountsCount: user.no_of_account,
       createdAt: user.createdAt,
       userStatus: user.user_status,
-      postal: user.zip_code,
+      nid: user.nid_no,
       phone: user.phone,
       accounts: user.accounts,
+      reqBank: user.reqBank,
+      verified_nid_no: user.verified_nid_no,
+      verified_phone: user.verified_phone,
       notifications: user.notifications,
     });
   } catch (error) {
@@ -54,17 +60,21 @@ const createUser = async (req, res) => {
       password: hashedPassword,
       phone: req.body.phone,
       full_addresse: req.body.addresse,
-      zip_code: req.body.postal,
+      nid_no: req.body.nid,
+      reqBank: req.body.reqBank,
     });
+    user.user_id = user._id;
+    await user.save();
     res.status(201).json({
       id: user.id,
+      user_id: user.user_id,
       name: user.name,
       email: user.email,
-      token: generateUsersToken(user.id, user.email),
+      token: "",
     });
   } catch (error) {
     console.log(66, error)
-    if (error.message.match(/(email|password|name|postal|phone|addresee)/gi)) {
+    if (error.message.match(/(email|password|name|nid|phone|addresee)/gi)) {
       return res.status(400).send(error.message);
     }
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");
@@ -121,8 +131,8 @@ const updateUser = async (req, res) => {
     user.markModified("phone");
     user.full_addresse = req.body.addresse;
     user.markModified("full_addresse");
-    user.zip_code = req.body.postal;
-    user.markModified("zip_code");
+    user.nid_no = req.body.nid;
+    user.markModified("nid_no");
 
     //get updated user info & send it back
     const updatedUser = await user.save();
@@ -135,13 +145,16 @@ const updateUser = async (req, res) => {
       accountsCount: updatedUser.no_of_account,
       createdAt: updatedUser.createdAt,
       userStatus: updatedUser.user_status,
-      postal: updatedUser.zip_code,
+      nid: updatedUser.nid_no,
       phone: updatedUser.phone,
       accounts: updatedUser.accounts,
+      reqBank: updatedUser.reqBank,
+      verified_nid_no: updatedUser.verified_nid_no,
+      verified_phone: updatedUser.verified_phone,
       notifications: updatedUser.notifications,
     });
   } catch (error) {
-    if (error.message.match(/(email|password|name|postal|phone|addresee)/gi))
+    if (error.message.match(/(email|password|name|nid|phone|addresee)/gi))
       return res.status(400).send(error.message);
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");
   }
@@ -174,9 +187,11 @@ const notificationUpdate = async (req, res) => {
       accountsCount: updatedUser.no_of_account,
       createdAt: updatedUser.createdAt,
       userStatus: updatedUser.user_status,
-      postal: updatedUser.zip_code,
+      nid: updatedUser.nid_no,
       phone: updatedUser.phone,
       accounts: updatedUser.accounts,
+      verified_nid_no: updatedUser.verified_nid_no,
+      verified_phone: updatedUser.verified_phone,
       notifications: updatedUser.notifications,
     });
   } catch (error) {
@@ -201,7 +216,7 @@ const deleteUser = async (req, res) => {
 //@desc   >>>> Update User's Status
 //@route  >>>> put /api/users/:id/updatestatus
 //@Access >>>> private(for admins only)
-const updateUserStatus = async (req, res) => {
+const updateUserStatus = async (req, res, next) => {
   //check if new status is actually the old status
   if (req.body.newStatus === req.body.oldStatus) {
     return res.status(400).send("Please Specify New Status For That User");
@@ -210,21 +225,61 @@ const updateUserStatus = async (req, res) => {
     //get user
     const user = await User.findById(req.params.id);
     //update user with new Status
-    user.user_status = req.body.newStatus;
-    user.markModified("user_status");
+    if(req.body.newStatus>2){
+      if(req.body.newStatus === 3)
+        user.verified_phone = 1
+      if(req.body.newStatus === 4)
+        user.verified_nid_no = 1
+      if(req.body.newStatus === 5){ //verified by branch
+        try {
+          const accountRequest = await AccountRequest.create({
+            client_id: user.id,
+            initial_balance: Math.floor(Math.random() * 6000) + 1000,
+          });
+          //go to notification with data
+          req.created = { account_id: accountRequest.id };
+          user.user_id = user.user_id.indexOf(req.admin.org_id) === -1 ? req.admin.org_id +"-"+ user.user_id : user.user_id;
+          //get updated user info & send it back
+          const updatedUser = await user.save();
+          return res.status(200).json({
+            _id: updatedUser.id,
+            user_id: updatedUser.user_id,
+            user_name: updatedUser.user_name,
+            email: updatedUser.email,
+            no_of_account: updatedUser.no_of_account,
+            user_status: updatedUser.user_status,
+            reqBank: updatedUser.reqBank,
+            verified_phone: updatedUser.verified_phone,
+            verified_nid_no: updatedUser.verified_nid_no,
+          });
+        } catch (error) {
+          console.log(error);
+          return res.status(500).send("Ooops!! Something Went Wrong, Try again...");
+        }
+      } 
+        
+    }else{
+      user.user_status = req.body.newStatus;
+      user.markModified("user_status");
+    }
 
+    user.user_id = user.user_id.indexOf(req.admin.org_id) === -1 ? req.admin.org_id +"-"+ user.user_id : user.user_id;
     //get updated user info & send it back
     const updatedUser = await user.save();
 
     res.status(200).json({
       _id: updatedUser.id,
+      user_id: updatedUser.user_id,
       user_name: updatedUser.user_name,
       email: updatedUser.email,
       no_of_account: updatedUser.no_of_account,
       user_status: updatedUser.user_status,
+      reqBank: updatedUser.reqBank,
+      verified_phone: updatedUser.verified_phone,
+      verified_nid_no: updatedUser.verified_nid_no,
     });
   } catch (error) {
-    if (error.message.match(/(email|password|name|postal|phone|addresee)/gi))
+    if (error.message.match(/(email|password|name|nid|phone|addresee)/gi))
       return res.status(400).send(error.message);
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");
   }

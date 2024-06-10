@@ -12,3 +12,10 @@ body {
   background: #025091;
   background: linear-gradient(90deg, #025091 0%, #0f172a 100%);
 }
+
+.custommsg{
+  font-size: 24px;
+  text-align: center;
+  color: #090;
+  font-weight: 700;
+}

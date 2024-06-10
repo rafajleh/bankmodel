@@ -21,10 +21,13 @@ export const UpdateUserStatus = ({ user, handleUpdating }) => {
       >
         <option value={0}>active</option>
         <option value={1}>Inactive</option>
-        <option value={2}>suspended</option>
+        <option value={2}>Suspended</option>
+        <option value={3}>Verify Mobile</option>
+        <option value={4}>Verify NID</option>
+        <option value={5}>Verified By Branch</option>
       </select>
       <FormButton
-        text={{ default: "Update Status" }}
+        text={{ default: "Update" }}
         icon={<RiExchangeFill className="mb-[-2px] ml-1" size={25} />}
       />
     </form>

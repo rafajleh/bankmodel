@@ -22,7 +22,7 @@ export default function UpdateUser() {
   const [fromInputs, setFromInputs] = useState({
     email: info && info.email,
     phone: info && info.phone.toString(),
-    postal: info && info.postal.toString(),
+    nid: info && info.nid.toString(),
     address: info && info.address,
     oldPassword: "",
     password: "",
@@ -37,7 +37,7 @@ export default function UpdateUser() {
     password,
     address,
     phone,
-    postal,
+    nid,
     msg,
   } = fromInputs;
 
@@ -69,7 +69,7 @@ export default function UpdateUser() {
     const userData = {
       email: email.trim(),
       phone: phone.trim(),
-      postal: postal.trim(),
+      nid: nid.trim(),
       addresse: address.trim(),
       token: user.token,
       id: user.id,
@@ -236,21 +236,21 @@ export default function UpdateUser() {
           </div>
           <div className="mb-6">
             <label
-              htmlFor="postal"
+              htmlFor="nid"
               className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
             >
               Post/Zip Code
             </label>
             <input
               type="text"
-              name="postal"
-              id="postal"
+              name="nid"
+              id="nid"
               className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              value={postal}
+              value={nid}
               onChange={(e) =>
                 setFromInputs({
                   ...fromInputs,
-                  postal: e.target.value,
+                  nid: e.target.value,
                 })
               }
               placeholder="Type your Post code"

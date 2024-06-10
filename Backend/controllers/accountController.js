@@ -5,18 +5,35 @@ const Account = require("../models/accountModel");
 //@Access >>>> Private (through admin approve only)
 const createAccount = async (req, res, next) => {
   try {
-    const account = await Account.create({
-      client_id: req.body.id,
-      balance: req.body.balance,
-    });
-    //go to notification
-    req.approved = {
-      request_id: req.body.request_id,
-      client_id: account.client_id,
-      account_id: account.id,
-    };
-    next();
+    console.log(req.body);
+    let oldAccount = await Account.findOne({client_id: req.body.id})
+    if(oldAccount){
+      oldAccount.payment_id = req.admin.org_id + "-" + oldAccount.payment_id
+      await oldAccount.save()
+      req.approved = {
+        request_id: req.body.request_id,
+        client_id: oldAccount.client_id,
+        account_id: oldAccount.id,
+      };
+      next();
+    }else{
+      const account = await Account.create({
+        client_id: req.body.id,
+        balance: req.body.balance,
+        payment_id: req.admin.org_id + "-" + req.body.id
+      });
+      account.payment_id = account.payment_id + "-" + account.id
+      await account.save()
+      //go to notification
+      req.approved = {
+        request_id: req.body.request_id,
+        client_id: account.client_id,
+        account_id: account.id,
+      };
+      next();
+    }
   } catch (error) {
+    console.log(36, error);
     if (error.message.match(/(Balance|Account|id)/gi)) {
       return res.status(400).send(error.message);
     }

@@ -12,6 +12,7 @@ const CREATE_ACCOUNT_API_URL =
 
 //Get All Account Requests
 const getAllAccountRequests = async (adminData) => {
+  debugger
   const res = await axios.get(API_URL, {
     headers: {
       authorization: `Bearer ${adminData.token}`,

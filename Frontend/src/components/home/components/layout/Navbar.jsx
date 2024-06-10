@@ -9,7 +9,7 @@ import { MdReviews } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Logo } from "../../../shared/Logo";
 
-const navItems = ["Home", "About", "Reviews"];
+const navItems = ["Saving Account", "FRD", "Loan"];
 const navIcons = [
   <AiFillHome size={25} className="mb-1 mr-1" />,
   <BsInfoCircleFill size={25} className="mb-1 mr-1" />,
@@ -73,27 +73,26 @@ export default function Navbar() {
 
           <div className="hidden lg:flex justify-center items-center gap-4 px-4 text-lg text-slate-800">
             {navItems.map((navItem, index) => (
-              <a
+              <Link
                 key={navItem}
                 className="flex justify-center items-center   p-3 !font-sans font-bold rounded-lg hover:text-white hover:bg-slate-800"
-                href={`#${navItem}`}
+                to="/account-open"
               >
                 {navIcons[index]}
                 {navItem}
-              </a>
+              </Link>
             ))}
           </div>
 
           <div className="hidden lg:flex justify-end items-center gap-4">
-            <Link
-              to="/register"
+            {/* <Link
               className="inline-flex font-bold text-xs sm:text-sm bg-teal-800 text-white hover:bg-white px-2 sm:px-3 py-2 hover:text-blue-800 border-2 hover:border-blue-800 items-center rounded-lg
          shadow transition-all ease-in-out duration-300"
             >
-              Register
-            </Link>
+              Payment Option
+            </Link> */}
             <Link
-              to="/login"
+              to="/admins/login"
               className="flex gap-1 justify-center items-center font-bold text-xs sm:text-sm bg-blue-800 text-white hover:bg-white px-2 sm:px-3 py-2 hover:text-blue-800 border-2 hover:border-blue-800  rounded-lg
          shadow transition-all ease-in-out duration-300"
             >

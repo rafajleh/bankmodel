@@ -21,6 +21,9 @@ const adminSchema = new mongoose.Schema(
         message: "Please Enter A Valid Name!",
       },
     },
+    org_id: {
+      type: String,
+    },
     email: {
       type: String,
       required: [true, "Please Type An Email!"],
