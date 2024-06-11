@@ -33,6 +33,10 @@ app.use("/api", apiLimiter);
 const setupRoute = require("./routes/setupRoutes");
 app.use("/api/setup", setupRoute);
 
+//qrcode Router
+const qrcodeRoute = require("./routes/qrcodeRoutes");
+app.use("/api/qrcode", qrcodeRoute);
+
 //users Router
 const usersRoute = require("./routes/usersRoutes");
 app.use("/api/users", usersRoute);

@@ -19,9 +19,9 @@ export const UpdateUserStatus = ({ user, handleUpdating }) => {
         value={userStatus}
         onChange={(e) => setUserStatus(+e.target.value)}
       >
-        <option value={0}>active</option>
-        <option value={1}>Inactive</option>
-        <option value={2}>Suspended</option>
+        <option value={0}>Select</option>
+        {/* <option value={1}>Inactive</option>
+        <option value={2}>Suspended</option> */}
         <option value={3}>Verify Mobile</option>
         <option value={4}>Verify NID</option>
         <option value={5}>Verified By Branch</option>

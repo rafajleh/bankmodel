@@ -27,9 +27,8 @@ const tableHeaderTitles = [
   "User Email",
   "Mobile No",
   "NID",
-  "User Status",
-  "No. Of Accounts",
-  "Remove User",
+  "Status",
+  "Action",
   "Update Status",
 ];
 
@@ -120,7 +119,7 @@ export const UsersListControl = ({ usersList }) => {
   const tableRow = (user, index) => {
     return (
       <tr
-        key={user._id}
+        key={user.id}
         className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} border-b `}
       >
         {/*user ID*/}
@@ -167,33 +166,7 @@ export const UsersListControl = ({ usersList }) => {
 
         {/*User Status*/}
         <th scope="row" className="p-2  text-gray-900  border-x-2 text-center ">
-          <span
-            className={`flex justify-center items-center w-full p-2  mx-auto rounded
-                     shadow ${user.user_status === 0 && "bg-green-100"}
-                    ${user.user_status === 1 && "bg-orange-100"}
-                    ${user.user_status === 2 && "bg-yellow-100"}`}
-          >
-            {user.user_status === 0 && (
-              <>
-                <span>Active</span>
-                <FcLowPriority className="ml-1" size={27} />
-              </>
-            )}
-
-            {user.user_status === 1 && (
-              <>
-                <span>Inactive</span>
-                <FcMediumPriority className="ml-1" size={27} />
-              </>
-            )}
-
-            {user.user_status === 2 && (
-              <>
-                <span>Suspended</span>
-                <FcHighPriority className="ml-1" size={27} />
-              </>
-            )}
-          </span>
+          {user.verified_phone && user.verified_nid_no ? 'Vedified' : 'Waiting for Verification'}
         </th>
 
         {/*User No. Of Accounts*/}
@@ -201,26 +174,8 @@ export const UsersListControl = ({ usersList }) => {
           scope="row"
           className="p-2  text-gray-900 whitespace-nowrap  border-x-2 text-center"
         >
-          <span
-            className="flex justify-center items-center w-3 h-3 p-3 mx-auto
-                    text-white rounded-[50%] shadow-sm bg-blue-600"
-          >
-            {user.no_of_account}
-          </span>
-        </th>
-
-        {/* Remove User */}
-        <th
-          scope="row"
-          className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
-        >
-          <form onSubmit={(event) => handleRemoving(event, user._id)}>
-            <FormButton
-              text={{ default: "Remove" }}
-              bgColor={["bg-red-600", "bg-red-700", "bg-red-800"]}
-              icon={<TiDelete className="mb-[-2px]" size={25} />}
-            />
-          </form>
+          {user.user_id.split("-").length === 1 && 'Agent Action Required'}
+          {user.verified_phone && user.verified_nid_no && user.user_id.split("-").length === 2 && 'Branch Approval Required'}
         </th>
 
         {/* Update User Status */}

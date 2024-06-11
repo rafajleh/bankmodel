@@ -36,6 +36,7 @@ import { UnactiveSuspendedUser } from "./components/shared/UnactiveSuspendedUser
 import { Account } from "./components/account/Account";
 import SetupPage from "./views/install/SetupPage";
 import { AccountOpen } from "./views/guest/AccountOpen";
+import { QrcodeDisplayData } from "./views/guest/QrcodeDisplayData";
 
 function App() {
   //Detect user
@@ -87,6 +88,7 @@ function App() {
           <Route exact path="/admins/login" element={<AdminLoginPage />} />
           <Route exact path="/login" element={<UserLoginPage />} />
           <Route exact path="/account-open" element={<AccountOpen />} />
+          <Route exact path="/qrcode" element={<QrcodeDisplayData />} />
           {paths.map((stringPath) => (
             <Route key={"Home"} exact path={stringPath} element={<Navigate to={"/"} />} />
           ))}
