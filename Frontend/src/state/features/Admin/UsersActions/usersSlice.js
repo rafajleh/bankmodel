@@ -120,7 +120,7 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.message = "User's Status Updated Successfully!";
+        state.message = "Status Updated Successfully!";
         state.usersList = state.usersList.map((user) => {
           if (Number(user._id) === Number(action.payload._id)) {
             return action.payload;

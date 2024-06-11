@@ -249,6 +249,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
           scope="row"
           className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
         >
+          {request.payment_id.split('-').length < 4 ? 
           <form onSubmit={(event) => handleDecline(event, request._id)}>
             <FormButton
               text={{ default: "Decline" }}
@@ -256,6 +257,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
               icon={<TiDelete className="-mb-1" size={27} />}
             />
           </form>
+          : '' }
         </th>
 
         {/* approve request */}
@@ -264,7 +266,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
           className="p-2 text-gray-900 whitespace-nowrap  border-x-2 text-center"
         >
           {(request.payment_id.split("-").length>3 && info.org_id >= 45600001) || 
-           (request.payment_id.split("-").length>4 && info.org_id >= 12300001) ? '' : 
+           (request.payment_id.split("-").length>4 && info.org_id >= 12300001) ? 'Approved' : 
             <form
               className="flex flex-col justify-center items-center"
               onSubmit={(event) =>

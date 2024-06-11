@@ -176,6 +176,7 @@ export const UsersListControl = ({ usersList }) => {
         >
           {user.user_id.split("-").length === 1 && 'Agent Action Required'}
           {user.verified_phone && user.verified_nid_no && user.user_id.split("-").length === 2 && 'Branch Approval Required'}
+          {user.user_id.split("-").length === 3 && 'Pay your payment'}
         </th>
 
         {/* Update User Status */}
