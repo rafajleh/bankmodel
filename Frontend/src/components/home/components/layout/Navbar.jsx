@@ -9,7 +9,7 @@ import { MdReviews } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Logo } from "../../../shared/Logo";
 
-const navItems = ["Saving Account", "FRD", "Loan"];
+const navItems = ["Saving Account", "FDR", "Loan"];
 const navIcons = [
   <AiFillHome size={25} className="mb-1 mr-1" />,
   <BsInfoCircleFill size={25} className="mb-1 mr-1" />,
