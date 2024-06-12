@@ -203,9 +203,9 @@ export const UsersListControl = ({ usersList }) => {
 
   return (
     <div className="max-w-5xl w-full">
-      <h3 className="text-2xl my-10 p-3 text-center font-bold bg-blue-200 text-gray-900 border-b-4 border-blue-800 rounded shadow">
+      {/* <h3 className="text-2xl my-10 p-3 text-center font-bold bg-blue-200 text-gray-900 border-b-4 border-blue-800 rounded shadow">
         Account Opening Request List ({filteredUsers && filteredUsers.length})
-      </h3>
+      </h3> */}
 
       {/*search users with name*/}
       {(usersList.length !== 0 || isLoading) && (

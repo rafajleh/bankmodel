@@ -64,17 +64,19 @@ export const SideNavbar = ({ admin = null, user = null }) => {
       {/* Sidebar starts */}
 
       {/* Tablet/desktop Sidebar*/}
-      <div className="w-64 absolute sm:relative bg-slate-50 shadow-lg flex-col justify-between hidden lg:flex ">
+      <div
+        className="w-64 absolute sm:relative bg-slate-50 shadow-lg flex-col justify-between hidden lg:flex "
+        style={{ background: "#b0c4de75" }}
+      >
         <div className="h-screen overflow-y-auto px-8 py-8 sticky top-0 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-400">
           {/* Logo */}
           <Logo />
 
           {/* Welcome Message */}
-          <div className="flex items-center p-2 my-4 bg-blue-200 text-sm font-bold text-blue-800 border-r-4 border-blue-800 rounded shadow">
+          <div className="flex items-center justify-center p-2 my-4 bg-blue-200 text-center text-sm font-bold text-blue-800">
             <AiFillHeart className="mr-1" size={22} />
-            <span className="w-full">
-              {`Welcome, `}
-              {admin && admin.name.split(" ")[0]}
+            <span className="mx-2">
+              Welcome {admin && admin.name.split(" ")[0]}{" "}
               {user && user.name.split(" ")[0]}
             </span>
           </div>
