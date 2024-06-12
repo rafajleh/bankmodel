@@ -36,7 +36,16 @@ const getOrgInfo = async (req, res) => {
   }
 };
 
+const welcome = async (req, res) => {
+  try {
+    res.status(200).json({"data": "welcome"});
+  } catch (error) {
+    res.status(500).send("Ooops!! Something Went Wrong, Try again...");
+  }
+};
+
 module.exports = {
   orgInfo,
+  welcome,
   getOrgInfo
 };
