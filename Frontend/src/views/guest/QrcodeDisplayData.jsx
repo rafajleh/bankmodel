@@ -102,14 +102,14 @@ export const QrcodeDisplayData = () => {
                     })}
                     <tr>
                         <td style={fontsize}>{data.trnxHistory?.createdAt.split("T")[0]}</td>
-                        <td style={fontsize}>1 Premium</td>
+                        <td style={fontsize}>1 Deposite</td>
                         <td style={{...fontsize, 'text-align': 'right'}}>{data.trnxHistory?.balance - total}</td>
                     </tr>
                     {data.trnxHistory?.deposit_logs?.map((val, key) => {
                         return (
                             <tr key={key}>
                                 <td style={fontsize}>{val.createdAt.split("T")[0]}</td>
-                                <td style={fontsize}>{key+2} Premium</td>
+                                <td style={fontsize}>{key+2} Deposite</td>
                                 <td style={{...fontsize, 'text-align': 'right'}}>{val.depositted_amount}</td>
                             </tr>
                         )
