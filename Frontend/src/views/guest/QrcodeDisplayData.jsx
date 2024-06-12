@@ -15,7 +15,7 @@ export const QrcodeDisplayData = () => {
 
   const fetchData = async (nid, mobile) => {
     try {
-      const response = await fetch(`http://localhost:5555/api/qrcode/getuserdatabyqr?nid=${encodeURIComponent(nid)}&mobile=${encodeURIComponent(mobile)}`); // Replace with your API endpoint
+      const response = await fetch(`http://localhost:5011/api/qrcode/getuserdatabyqr?nid=${encodeURIComponent(nid)}&mobile=${encodeURIComponent(mobile)}`); // Replace with your API endpoint
       if (!response.ok) {
         throw new Error('Network response was not ok.');
       }
@@ -30,7 +30,7 @@ export const QrcodeDisplayData = () => {
 
   const handelAddPayment = async () => {
     try {
-      const response = await fetch(`http://localhost:5555/api/qrcode/addpayment?uid=${data._id}`); // Replace with your API endpoint
+      const response = await fetch(`http://localhost:5011/api/qrcode/addpayment?uid=${data._id}`); // Replace with your API endpoint
       if (!response.ok) {
         throw new Error('Network response was not ok.');
       }

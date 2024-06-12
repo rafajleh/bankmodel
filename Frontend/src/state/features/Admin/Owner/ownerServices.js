@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/admins/"
-    : "http://localhost:5555/api/admins/";
+    : "http://localhost:5011/api/admins/";
 
 //Register Admin
 const adminRegister = async (payload) => {

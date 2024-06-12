@@ -8,7 +8,7 @@ const connectToMongoose = async () => {
     //   useNewUrlParser: true,
     //   useUnifiedTopology: true,
     // });
-    const db = await mongoose.connect('mongodb://127.0.0.1:27017/orgsys');
+    const db = await mongoose.connect(process.env.MONGO_URI);
     console.log(`Connected to Mongoose Through ${db.connection.host}`);
   } catch (error) {
     console.log(error);

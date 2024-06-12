@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/users/"
-    : "http://localhost:5555/api/users/";
+    : "http://localhost:5011/api/users/";
 
 //Login User
 const login = async (userData) => {
