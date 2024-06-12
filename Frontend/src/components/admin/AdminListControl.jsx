@@ -198,9 +198,9 @@ const AdminListControl = ({ adminsList }) => {
 
   return (
     <div className="max-w-5xl w-full">
-      <h3 className="text-2xl my-10 p-3 text-center font-bold bg-blue-200 text-gray-900 border-b-4 border-blue-800 rounded shadow">
+      {/* <h3 className="text-2xl my-10 p-3 text-center font-bold bg-blue-200 text-gray-900 border-b-4 border-blue-800 rounded shadow">
         Bank List ({filteredAdmins && filteredAdmins.length})
-      </h3>
+      </h3> */}
 
       {/*search admins with name*/}
       <div className="flex justify-center items-center flex-wrap md:flex-nowrap gap-4 mb-6 p-4 bg-blue-200 rounded-md border-b-4 border-blue-800">

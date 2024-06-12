@@ -39,7 +39,7 @@ export const PaginationTable = ({
   const spinnerSize = window.innerWidth < 400 ? 30 : 45;
 
   return (
-    <div className="overflow-x-auto relative shadow-md sm:rounded-lg my-10 border-y-4 border-red-800 rounded scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-400">
+    <div className="overflow-x-auto relative shadow-md sm:rounded-lg my-10 border-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-400">
       {isLoading && (
         <MainSpinner spinnerSize={spinnerSize} spinnerHeight="50vh" />
       )}

@@ -42,18 +42,18 @@ export const AdminNavLinks = ({ admin }) => {
   ];
 
   return (
-    <>
+    <div class="">
       {/* //Admin navbar links creation */}
 
       {adminNavData.map((link) => (
         <li
           key={link.title}
-          className="flex w-full justify-between items-center mb-6 select-none"
+          className="flex w-full justify-between items-center select-none"
         >
           {link.title === "Logout" ? (
             <button
               onClick={link.handleLogout}
-              className="w-full flex items-center p-2 border-r-4 border-red-600 rounded shadow bg-red-200"
+              className="w-full flex items-center p-2"
             >
               <link.icon className="text-red-800" size={23} />
               <span className="text-sm  ml-2 font-semibold text-red-800 hover:text-red-700 hover:underline">
@@ -63,7 +63,7 @@ export const AdminNavLinks = ({ admin }) => {
           ) : (
             <Link
               to={link.to}
-              className="w-full flex items-center p-2 border-r-4 border-blue-800 rounded shadow bg-blue-200"
+              className="w-full flex items-center p-2"
             >
               <link.icon className="text-blue-800" size={22} />
               <span
@@ -77,6 +77,6 @@ export const AdminNavLinks = ({ admin }) => {
           )}
         </li>
       ))}
-    </>
+    </div>
   );
 };

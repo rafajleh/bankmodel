@@ -8,8 +8,9 @@ const connectToMongoose = async () => {
     //   useNewUrlParser: true,
     //   useUnifiedTopology: true,
     // });
-    const db = await mongoose.connect('mongodb://127.0.0.1:27017/orgsys');
-    console.log(`Connected to Mongoose Through ${db.connection.host}`);
+    // const db = await mongoose.connect('mongodb://127.0.0.1:27017/orgsys');
+    const db = await mongoose.connect('mongodb://182.163.122.135:57230/orgsys');
+    console.log(`Connected to Mongoose Through ${db.connection.host}`);    
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -19,3 +20,8 @@ const connectToMongoose = async () => {
 module.exports = {
   connectToMongoose,
 };
+
+
+
+
+
