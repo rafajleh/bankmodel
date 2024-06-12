@@ -3,12 +3,12 @@ import axios from "axios";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/users/"
-    : "http://localhost:5000/api/users/";
+    : "http://localhost:5555/api/users/";
 
 const API_URL_REQUEST =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/request/create"
-    : "http://localhost:5000/api/request/create";
+    : "http://localhost:5555/api/request/create";
 
 //Get User
 const getUser = async (userData) => {

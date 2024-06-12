@@ -3,12 +3,12 @@ import axios from "axios";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/request/"
-    : "http://localhost:5000/api/request/";
+    : "http://localhost:5555/api/request/";
 
 const CREATE_ACCOUNT_API_URL =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/account/create"
-    : "http://localhost:5000/api/account/create";
+    : "http://localhost:5555/api/account/create";
 
 //Get All Account Requests
 const getAllAccountRequests = async (adminData) => {

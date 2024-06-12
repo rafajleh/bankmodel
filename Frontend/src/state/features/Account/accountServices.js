@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://production-url.com/api/account/"
-    : "http://localhost:5000/api/account/";
+    : "http://localhost:5555/api/account/";
 
 //Get Account
 const getAccount = async (payload) => {
