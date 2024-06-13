@@ -11,7 +11,6 @@ export const AdminLoginPage = () => {
   UseResetStatus(() => {
     dispatch(resetAdminAuthStatus());
   });
-
   UseResetStatus(() => {
     return () => {
       dispatch(resetAdminAuthStatus());
