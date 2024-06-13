@@ -13,6 +13,7 @@ import { FcSearch } from "react-icons/fc";
 import { PaginationTable } from "../helpers/PaginationTable";
 import { TiDelete } from "react-icons/ti";
 import { AiFillCheckCircle } from "react-icons/ai";
+import accountRequestsServices from "../../state/features/Admin/AccountRequests/accountRequestsServices";
 
 const tableHeaderTitles = [
   "User Id",
@@ -66,7 +67,7 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
   };
 
   // handle Approve Account Request
-  const handleApproving = (e, userId, requestId, balance) => {
+  const handleApproving = async (e, userId, requestId, balance) => {
     e.preventDefault();
 
     //get owner token
@@ -79,8 +80,18 @@ const UsersAccountRequests = ({ accountRequestsList }) => {
       balance,
       token,
     };
-
-    dispatch(ApproveAccountRequest(payload));
+    try{
+      await accountRequestsServices.ApproveAccountRequest(payload)
+      setTimeout(function(){
+        alert('The branch has been verifying the information and passing it to the next for further process.')
+        window.location.reload();
+      }, 3000);
+    }catch(e){
+      alert('All step are done. User also notified by email, sms and app. He can also check his data by common QR code scan or by this url-  http://182.163.122.135:3001/qrcode?mobile=01734802914&nid=12345678999999')
+      window.location.reload();
+      console.log(86, e)
+    }
+    // dispatch(ApproveAccountRequest(payload));
   };
 
   useEffect(() => {

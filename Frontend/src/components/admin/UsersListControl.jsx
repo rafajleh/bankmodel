@@ -112,6 +112,7 @@ export const UsersListControl = ({ usersList }) => {
         if(newStatus === 5){
           targetCol.textContent = 'Waiting for Payment';
         }
+        window.location.reload();
       }, 2000);
     }catch(e){
 

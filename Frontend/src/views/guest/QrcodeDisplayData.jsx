@@ -37,7 +37,7 @@ export const QrcodeDisplayData = () => {
       }
       // console.log(await response.json())
       setLoading(false);
-      window. location. reload();
+      window.location.reload();
     } catch (error) {
       setError(error.message);
       setLoading(false);
