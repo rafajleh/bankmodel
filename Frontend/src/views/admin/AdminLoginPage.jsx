@@ -16,6 +16,7 @@ export const AdminLoginPage = () => {
       dispatch(resetAdminAuthStatus());
     };
   });
+  
   return (
     <div className="min-h-screen flex justify-center items-center p-4 md:p-10">
       <AdminLogin />
