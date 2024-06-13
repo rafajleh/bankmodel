@@ -10,14 +10,14 @@ import { useSelector } from "react-redux";
 export const DashboardNavbar = ({ activeTab, setActiveTab }) => {
   const navTabs = [
     {
-      stateName: "usersList",
-      tabName: "Account Opening Request",
-      icon: FcNews,
-    },
-    {
       stateName: "adminsList",
       tabName: "All Bank Lists",
       icon: FcVoicePresentation,
+    },
+    {
+      stateName: "usersList",
+      tabName: "Account Opening Request",
+      icon: FcNews,
     },
     {
       stateName: "usersRequests",
@@ -40,14 +40,14 @@ export const DashboardNavbar = ({ activeTab, setActiveTab }) => {
           {navTabs.map((tab, index) => (
             <li
               key={index}
-              className={`flex justify-center items-center cursor-pointer bg-blue-200 p-5 hover:text-blue-700 hover:underline  ${
+              className={`flex justify-center items-center cursor-pointer p-5 hover:text-blue-700 hover:underline  ${
                 activeTab === tab.stateName
-                  ? " font-bold underline underline-offset-2"
-                  : " font-semibold"
+                  ? " font-bold underline underline-offset-2 bg-green-200"
+                  : " font-semibold bg-blue-200"
               }
               ${
                 info.role !== "owner" &&
-                (index === 1 || index === 3) &&
+                (index === 0 || index === 3) &&
                 "hidden"
               }`}
               onClick={() => setActiveTab(tab.stateName)}

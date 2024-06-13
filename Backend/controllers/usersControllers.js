@@ -11,7 +11,7 @@ const getUsers = async (req, res) => {
   try {
     const users = await User.find().select(
       "_id user_id user_name email phone nid_no verified_nid_no verified_phone user_status no_of_account"
-    );
+    ).sort({ _id: -1 });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");

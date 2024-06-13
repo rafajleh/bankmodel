@@ -28,9 +28,9 @@ const createAccountRequest = async (req, res, next) => {
 const getAccountRequests = async (req, res) => {
   try {
     if(req.admin.org_id < 78900001)
-      var accountRequests = await Account.find();
+      var accountRequests = await Account.find().sort({ _id: -1 });
     else
-      var accountRequests = await AccountRequest.find();
+      var accountRequests = await AccountRequest.find().sort({ _id: -1 });
     res.status(200).json(accountRequests);
   } catch (error) {
     res.status(500).send("Ooops!! Something Went Wrong, Try again...");

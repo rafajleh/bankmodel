@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from "react-qr-code";
+import BASE_URL from '../../config/config';
 
 export const QrcodeDisplayData = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ export const QrcodeDisplayData = () => {
 
   const fetchData = async (nid, mobile) => {
     try {
-      const response = await fetch(`http://182.163.122.135:5011/api/qrcode/getuserdatabyqr?nid=${encodeURIComponent(nid)}&mobile=${encodeURIComponent(mobile)}`); // Replace with your API endpoint
+      const response = await fetch(`${BASE_URL}/api/qrcode/getuserdatabyqr?nid=${encodeURIComponent(nid)}&mobile=${encodeURIComponent(mobile)}`); // Replace with your API endpoint
       if (!response.ok) {
         throw new Error('Network response was not ok.');
       }
@@ -30,7 +31,7 @@ export const QrcodeDisplayData = () => {
 
   const handelAddPayment = async () => {
     try {
-      const response = await fetch(`http://182.163.122.135:5011/api/qrcode/addpayment?uid=${data._id}`); // Replace with your API endpoint
+      const response = await fetch(`${BASE_URL}/api/qrcode/addpayment?uid=${data._id}`); // Replace with your API endpoint
       if (!response.ok) {
         throw new Error('Network response was not ok.');
       }
@@ -45,6 +46,10 @@ export const QrcodeDisplayData = () => {
 
   const fontsize = {'font-size': '16px', 'border': '1px solid #DDD', 'padding': '10px'}
   const borderS1 = { 'padding': '1rem','color': 'white','border-width': '3px','border-style': 'solid','border-image': 'linear-gradient(to bottom, red, rgba(0, 0, 0, 0) ) 1 100%' }
+
+  const imageUrls = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'];
+  const randomImageUrl = 'src/assets/imgs/userimg/' + imageUrls[Math.floor(Math.random() * imageUrls.length)]
+  
   return (
     <div>
       <div style={borderS1} className="min-h-screen max-w-4xl w-full mx-auto flex flex-col gap-4 p-4 md:p-10">
@@ -58,16 +63,19 @@ export const QrcodeDisplayData = () => {
                 <td className="font-semibold" style={{'background': '#FFF', 'font-size': '14px', 'text-align': 'left'}}>
                   <a>Close</a>
                 </td>
-                <td className="font-semibold" style={{'background': '#FFF', 'font-size': '14px', 'text-align': 'right'}}>
+                <td colSpan={2} className="font-semibold" style={{'background': '#FFF', 'font-size': '14px', 'text-align': 'right'}}>
                   <a onClick={() => handelAddPayment()}>Add Payment</a>
                 </td>
             </tr>
             <tr>
-                <td colSpan={2} className="font-semibold" style={{'background': '#26285ad4', 'color': '#FFF', 'padding': '20px', 'font-size': '20px', 'text-align': 'center'}}>DIGITAL BANK</td>
+                <td colSpan={3} className="font-semibold" style={{'background': '#26285ad4', 'color': '#FFF', 'padding': '20px', 'font-size': '20px', 'text-align': 'center'}}>DIGITAL BANK</td>
             </tr>
             <tr>
                 <td className="font-semibold" style={fontsize}>Name</td>
                 <td className="font-bold" style={fontsize}>{data.user_name}</td>
+                <td rowSpan={4}>
+                  <img src={randomImageUrl} style={{width: '120px', height: '130px', position: 'relative', left: '50%'}} />
+                </td>
             </tr>
             <tr>
                 <td className="font-semibold" style={fontsize}>Mobile Number</td>
@@ -84,13 +92,15 @@ export const QrcodeDisplayData = () => {
             <tr>
                 <td className="font-semibold" style={fontsize}>Account Open in</td>
                 <td className="font-bold" style={fontsize}>{data.reqBank}</td>
+                <td></td>
             </tr>
             <tr>
                 <td className="font-semibold" style={fontsize}>Total Balance</td>
                 <td className="font-bold" style={fontsize}>{data.trnxHistory?.balance} BDT</td>
+                <td></td>
             </tr>
             <tr>
-                <td colSpan={2}>
+                <td colSpan={3}>
                   <table className="w-full !text-xs text-gray-500 ">
                     <tr style={{'background': '#999', 'color': '#FFF'}}>
                       <th width="150px" className="font-semibold" style={fontsize}>Date</th>

@@ -1,18 +1,13 @@
 import axios from "axios";
+import BASE_URL from "../../../../config/config";
 
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://production-url.com/api/request/"
-    : "http://182.163.122.135:5011/api/request/";
+const API_URL = BASE_URL + "/api/request/";
 
-const CREATE_ACCOUNT_API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://production-url.com/api/account/create"
-    : "http://182.163.122.135:5011/api/account/create";
+const CREATE_ACCOUNT_API_URL = BASE_URL + "/api/account/create";
 
 //Get All Account Requests
 const getAllAccountRequests = async (adminData) => {
-  debugger
+  // debugger
   const res = await axios.get(API_URL, {
     headers: {
       authorization: `Bearer ${adminData.token}`,

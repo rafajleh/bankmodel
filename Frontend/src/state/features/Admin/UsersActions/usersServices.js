@@ -1,9 +1,7 @@
 import axios from "axios";
+import BASE_URL from "../../../../config/config";
 
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://production-url.com/api/users/"
-    : "http://182.163.122.135:5011/api/users/";
+const API_URL =  BASE_URL + "/api/users/";
 
 //Get All Users
 const getAllUsers = async (adminData) => {

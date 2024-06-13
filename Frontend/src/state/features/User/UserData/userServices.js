@@ -1,14 +1,8 @@
 import axios from "axios";
+import BASE_URL from "../../../../config/config";
 
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://production-url.com/api/users/"
-    : "http://182.163.122.135:5011/api/users/";
-
-const API_URL_REQUEST =
-  process.env.NODE_ENV === "production"
-    ? "https://production-url.com/api/request/create"
-    : "http://182.163.122.135:5011/api/request/create";
+const API_URL = BASE_URL + "/api/users/";
+const API_URL_REQUEST = BASE_URL + "/api/request/create";
 
 //Get User
 const getUser = async (userData) => {

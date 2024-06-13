@@ -73,13 +73,13 @@ export const SideNavbar = ({ admin = null, user = null }) => {
           <Logo />
 
           {/* Welcome Message */}
-          <div className="flex items-center justify-center p-2 my-4 bg-blue-200 text-center text-sm font-bold text-blue-800">
+          {/* <div className="flex items-center justify-center p-2 my-4 bg-blue-200 text-center text-sm font-bold text-blue-800">
             <AiFillHeart className="mr-1" size={22} />
             <span className="mx-2">
-              Welcome {admin && admin.name.split(" ")[0]}{" "}
-              {user && user.name.split(" ")[0]}
+              Welcome {admin && admin.name}{" "}
+              {user && user.name}
             </span>
-          </div>
+          </div> */}
 
           {/* Links */}
           <ul className="mt-12">

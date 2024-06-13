@@ -1,9 +1,7 @@
 import axios from "axios";
+import BASE_URL from "../../../config/config";
 
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://production-url.com/api/setup/"
-    : "http://182.163.122.135:5011/api/setup/";
+const API_URL = BASE_URL + "/api/setup/";
 
 //orginfo
 const orginfo = async (userData) => {

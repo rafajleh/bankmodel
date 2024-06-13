@@ -20,6 +20,7 @@ import {
   FcSearch,
 } from "react-icons/fc";
 import { PaginationTable } from "../helpers/PaginationTable";
+import usersServices from "../../state/features/Admin/UsersActions/usersServices";
 
 const tableHeaderTitles = [
   "User ID",
@@ -77,7 +78,20 @@ export const UsersListControl = ({ usersList }) => {
   // handle updating user status
   const handleUpdating = (e, UpdatedUserID, oldStatus, newStatus) => {
     e.preventDefault();
-
+    const targetRow = document.querySelector('.rowkey'+UpdatedUserID);
+    let targetCol = '';
+    if (targetRow && newStatus === 3) {
+      targetCol = targetRow.querySelector('.mobile span');
+      targetCol.textContent = 'Verifying...'
+    }
+    if (targetRow && newStatus === 4) {
+      targetCol = targetRow.querySelector('.nid span');
+      targetCol.textContent = 'Verifying...'
+    }
+    if (targetRow && newStatus === 5) {
+      targetCol = targetRow.querySelector('.action');
+      targetCol.textContent = 'Waiting for verification...'
+    }
     //get admin token
     const token = info.token;
 
@@ -88,8 +102,21 @@ export const UsersListControl = ({ usersList }) => {
       newStatus,
       oldStatus,
     };
+    try{
+      setTimeout(async function(){
+        await usersServices.updateUserStatus(userData);
+        if(newStatus === 3 || newStatus === 4){
+          targetCol.className = '';
+          targetCol.textContent = 'Verified';
+        }
+        if(newStatus === 5){
+          targetCol.textContent = 'Waiting for Payment';
+        }
+      }, 2000);
+    }catch(e){
 
-    dispatch(updateUserStatus(userData));
+    }
+    // dispatch(updateUserStatus(userData));
   };
 
   useEffect(() => {
@@ -119,8 +146,8 @@ export const UsersListControl = ({ usersList }) => {
   const tableRow = (user, index) => {
     return (
       <tr
-        key={user.id}
-        className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} border-b `}
+        key={user._id}
+        className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} border-b rowkey${user._id}`}
       >
         {/*user ID*/}
         <th
@@ -149,19 +176,19 @@ export const UsersListControl = ({ usersList }) => {
         {/*user mobile*/}
         <th
           scope="row"
-          className="p-2  text-gray-900 whitespace-nowrap  border-x-2 text-center"
+          className="p-2  text-gray-900 whitespace-nowrap mobile border-x-2 text-center"
         >
           0{user.phone}
-          <div>{!user.verified_phone ? 'Not' : ''} Verified</div>
+          <div>{!user.verified_phone ? <span className="text-red-800">Not Verified</span> : 'Verified'}</div>
         </th>
         
         {/*user NID*/}
         <th
           scope="row"
-          className="p-2  text-gray-900 whitespace-nowrap  border-x-2 text-center"
+          className="p-2  text-gray-900 whitespace-nowrap nid border-x-2 text-center"
         >
           {user.nid_no}
-          <div>{!user.verified_nid_no ? 'Not' : ''}  Verified</div>
+          <div>{!user.verified_nid_no ? <span className="text-red-800">Not Verified</span> : 'Verified'}</div>
         </th>
 
         {/*User Status*/}
@@ -172,11 +199,12 @@ export const UsersListControl = ({ usersList }) => {
         {/*User No. Of Accounts*/}
         <th
           scope="row"
-          className="p-2  text-gray-900 whitespace-nowrap  border-x-2 text-center"
+          className="p-2 action text-gray-900 whitespace-nowrap  border-x-2 text-center"
         >
           {user.user_id.split("-").length === 1 && 'Agent Action Required'}
-          {user.verified_phone && user.verified_nid_no && user.user_id.split("-").length === 2 && 'Branch Approval Required'}
-          {user.user_id.split("-").length === 3 && 'Pay your payment'}
+          {user.user_id.split("-").length === 2 && 'Branch Approval Required'}
+          {user.user_id.split("-").length === 3 && user.no_of_account >= 1 && 'Account Active'}
+          {user.user_id.split("-").length === 3 && ! user.no_of_account && 'Waiting for Payment'}
         </th>
 
         {/* Update User Status */}
@@ -184,7 +212,7 @@ export const UsersListControl = ({ usersList }) => {
           scope="row"
           className="p-2  text-gray-900 whitespace-nowrap  border-x-2 text-center"
         >
-          <UpdateUserStatus user={user} handleUpdating={handleUpdating} />
+          {user.no_of_account === 0 && <UpdateUserStatus user={user} handleUpdating={handleUpdating} />}
         </th>
       </tr>
     );
