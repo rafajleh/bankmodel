@@ -141,6 +141,7 @@ function App() {
               element={<RetrieveBalance />}
             />
             <Route exact path="/contact" element={<Contact />} />
+            <Route exact path="/qrcode" element={<QrcodeDisplayData />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
@@ -162,6 +163,7 @@ function App() {
               <Route exact path="/register" element={<Navigate to={"/"} />} />
               <Route exact path="/login" element={<Navigate to={"/"} />} />
               <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/qrcode" element={<QrcodeDisplayData />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
@@ -175,6 +177,7 @@ function App() {
             <Route exact path="/register" element={<Navigate to={"/"} />} />
             <Route exact path="/login" element={<Navigate to={"/"} />} />
             <Route exact path="/admins/login" element={<Navigate to={"/"} />} />
+            <Route exact path="/qrcode" element={<QrcodeDisplayData />} />
             <Route
               exact
               path="/admins/profile/:id"
